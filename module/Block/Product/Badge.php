@@ -9,7 +9,7 @@ class Badge extends \Magento\Framework\View\Element\Template
      *
      * @var string
      */
-    protected $_templateBadge = 'MagentoEse_ProductBadge::product/image.phtml';
+    protected $_templateBadge = 'MagentoEse_ProductBadge::product/badge.phtml';
 
     /**
      * @var \MagentoEse\ProductBadge\Model\Badge
