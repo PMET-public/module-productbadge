@@ -1,0 +1,12 @@
+<?php
+?>
+<?php
+/**
+ * Product badge template
+ *
+ * @var $block \MagentoEse\ProductBadge\Block\Product\Badge
+ */
+?>
+<?php if ($block->hasBadge()): ?>
+    <span class="badge badge-<?php echo $block->getBadgeClass() ?>"><span><?php echo $block->getBadgeLabel() ?></span></span>
+<?php endif; ?>

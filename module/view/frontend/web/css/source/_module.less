@@ -1,0 +1,117 @@
+// color vars
+@badge-blue: #1874ba;
+@badge-green: #11B400;
+@badge-pink: #D85378;
+@badge-orange: #ff5501;
+@badge-red: #CF5050;
+@badge-yellow: #f7b32e;
+@badge-black: #000000;
+
+// ribbon mixin for badges
+.ribbon(@badge-main, @badge-edge, @badge-shadow: @badge-edge, @rgba: 80%) {
+    background-color: fade(@badge-main, @rgba);
+    &:before {
+        border-top-color: fade(@badge-edge, @rgba);
+        border-bottom-color: fade(@badge-edge, @rgba);
+        border-right-color: fade(@badge-edge, @rgba);
+        box-shadow: 1px 0px 0px fade(@badge-edge, @rgba);
+    }
+}
+
+// remove the hover state of the anchor tag
+a.product-item-photo:hover {
+    text-decoration: none;
+}
+
+// badge container, for flexible positioning and font size control
+.badge {
+    position: relative;
+    bottom: 50px;
+    z-index: 10;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    font-size: 9px;
+    height: 0;
+    // the badge itself is the span (scales with font size of container)
+    > span {
+        position: relative;
+        padding: 0.2em 0.75em;
+        line-height: 30px;
+        color: #fff;
+        font-family: helvetica, arial, sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        white-space: nowrap;
+        box-shadow: 0 2px 2px #ddd;
+        &:before {
+            display: block;
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 2px;
+            content: '';
+            border: 0.8em solid #fff;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            left: -1.6em;
+        }
+    }
+}
+
+// ribbon color mixins
+.ribbon-blue()      { .ribbon(@badge-blue, darken(@badge-blue, 10), darken(@badge-blue, 6)); }
+.ribbon-green()     { .ribbon(@badge-green, darken(@badge-green, 6)); }
+.ribbon-pink()      { .ribbon(@badge-pink, darken(@badge-pink, 10)); }
+.ribbon-orange()    { .ribbon(@badge-orange, darken(@badge-orange, 6)); }
+.ribbon-black()     { .ribbon(lighten(@badge-black, 20), @badge-black); }
+.ribbon-yellow()    { .ribbon(darken(@badge-yellow, 10), darken(@badge-yellow, 15)); }
+
+// default badges are blue
+.badge > span                   { .ribbon-blue(); }
+
+// predefined badge colors
+.badge-blue > span              { .ribbon-blue(); }
+.badge-green > span             { .ribbon-green(); }
+.badge-pink > span              { .ribbon-pink(); }
+.badge-orange > span            { .ribbon-orange(); }
+.badge-black > span             { .ribbon-black(); }
+.badge-yellow > span            { .ribbon-yellow(); }
+
+// custom defined badge colors
+.badge-new > span               { .ribbon-green(); }
+.badge-sale > span              { .ribbon-pink(); }
+.badge-best-seller > span       { .ribbon-orange(); }
+.badge-almost-gone > span       { .ribbon-black(); }
+.badge-instore-pickup > span    { .ribbon-blue(); }
+.badge-most-shared > span       { .ribbon-yellow(); }
+
+
+
+
+// stuff left over from the conversion of magento 1
+/*
+.products-list .badge{
+    position: relative;
+    top: 10px;
+    left: -250px;
+}
+*/
+
+/*
+.product-view{
+    .badge{
+        top: 30px;
+        font-size: 14px;
+    }
+}
+*/
+
+/*
+.bp(max-width, @bp-small) {
+    .badge {
+        left: 5px;
+        font-size: 12px !important;
+    }
+}
+*/
