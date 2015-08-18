@@ -48,7 +48,7 @@ class InstallData implements InstallDataInterface
             \Magento\Catalog\Model\Product::ENTITY,
             'badge',
             [
-                'type' => 'text',
+                'type' => 'varchar',
                 'label' => 'Product Badge',
                 'input' => 'multiselect',
                 'required' => false,
@@ -65,7 +65,7 @@ class InstallData implements InstallDataInterface
                 'used_in_product_listing' => true,
                 'group' => 'General',
                 'is_used_in_grid' => true,
-                'is_visible_in_grid' => false,
+                'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
                 'option' => [
                     'values' => [
@@ -73,7 +73,8 @@ class InstallData implements InstallDataInterface
                         'New',
                         'In-Store Pickup',
                         'Best Seller',
-                        'Most Shared'
+                        'Most Shared',
+                        'Custom Example (Pink)'
                     ]
                 ]
             ]
