@@ -1,32 +1,51 @@
 <?php
 
-/**
- * Magento ESE product badge model
- */
-namespace MagentoEse\ProductBadge\Model;
+namespace MagentoEse\ProductBadge\Helper;
 
-class Badge
+use Magento\Framework\App\Area;
+use Magento\Framework\App\Helper\AbstractHelper;
+
+/**
+ * Product Badge helper
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ */
+class Badge extends AbstractHelper
 {
     /**
      * @var []
      */
-    private $_badgeList;
+    protected $_badgeList;
 
     /**
      * @var []
      */
-    private $_badgeListDefaults;
+    protected $_badgeListDefaults;
 
     /**
-     * Initialize block
+     * Reset all previous data
+     *
+     * @return $this
+     */
+    protected function _reset()
+    {
+        $this->_badgeList = null;
+        $this->_badgeListDefaults = null;
+        return $this;
+    }
+
+    /**
+     * Initialize Helper to work with Badge
      *
      * @param \Magento\Catalog\Model\Product $product
      * @return $this
      */
     public function init($product)
     {
+        $this->_reset();
+
         $this->_badgeList = $product->getAttributeText('badge');
         $this->_badgeListDefaults = $this->getDefaultAttributeText($product, 'badge');
+
         return $this;
     }
 
@@ -74,6 +93,7 @@ class Badge
                 return $item['label'];
             }
         }
+        return '';
     }
 
     /**
