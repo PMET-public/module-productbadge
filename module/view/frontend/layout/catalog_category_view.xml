@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="category.products.list" template="MagentoEse_ProductBadge::product/list.phtml" class="MagentoEse\ProductBadge\Block\Product\ListProduct" />
+        <referenceBlock name="category.products.list">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">MagentoEse_ProductBadge::product/list.phtml</argument>
+            </action>
+        </referenceBlock>
     </body>
 </page>
