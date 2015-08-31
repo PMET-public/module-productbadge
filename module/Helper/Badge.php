@@ -14,22 +14,22 @@ class Badge extends AbstractHelper
     /**
      * @var []
      */
-    protected $_badgeList;
+    protected $badgeList;
 
     /**
      * @var []
      */
-    protected $_badgeListDefaults;
+    protected $badgeListDefaults;
 
     /**
      * Reset all previous data
      *
      * @return $this
      */
-    protected function _reset()
+    protected function reset()
     {
-        $this->_badgeList = null;
-        $this->_badgeListDefaults = null;
+        $this->badgeList = [];
+        $this->badgeListDefaults = [];
         return $this;
     }
 
@@ -41,10 +41,10 @@ class Badge extends AbstractHelper
      */
     public function init($product)
     {
-        $this->_reset();
+        $this->reset();
 
-        $this->_badgeList = $product->getAttributeText('badge');
-        $this->_badgeListDefaults = $this->getDefaultAttributeText($product, 'badge');
+        $this->badgeList = $product->getAttributeText('badge');
+        $this->badgeListDefaults = $this->getDefaultAttributeText($product, 'badge');
 
         return $this;
     }
@@ -54,15 +54,14 @@ class Badge extends AbstractHelper
      *
      * @param \Magento\Catalog\Model\Product $product
      * @param string $attributeCode
-     * @return string
+     * @return string|array
      */
-    private function getDefaultAttributeText($product, $attributeCode)
+    private function getDefaultAttributeText(\Magento\Catalog\Model\Product $product, $attributeCode)
     {
         $value = $product->getData($attributeCode);
 
         // Reference:
-        //      Magento\Eav\Model\Entity\Attribute\Source
-        //          getOptionText()
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getOptionText
         $isMultiple = false;
         if (strpos($value, ',')) {
             $isMultiple = true;
@@ -71,11 +70,9 @@ class Badge extends AbstractHelper
 
         // get the default (Admin store_id=0) values for the options
         // Reference:
-        //      Magento\Catalog\Model\Product
-        //          getAttributeText()
-        //      Magento\Eav\Model\Entity\Attribute\Source
-        //          getAllOptions()
-        //          getOptionText()
+        //  \Magento\Catalog\Model\Product::getAttributeText
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getAllOptions
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getOptionText
         $options = $product->getResource()->getAttribute($attributeCode)->getSource()->getAllOptions(false, true);
 
         if ($isMultiple) {
@@ -104,9 +101,9 @@ class Badge extends AbstractHelper
     public function getClassName()
     {
         if ($this->hasBadge()) {
-            preg_match("/.+\(([\w-]+)\)+/", $this->getSingleBadge($this->_badgeListDefaults), $regexArrayResults);
+            preg_match("/.+\(([\w-]+)\)+/", $this->getSingleBadge($this->badgeListDefaults), $regexArrayResults);
             if (empty($regexArrayResults[1])) {
-                $className = strtolower(preg_replace("/\W/", "-", $this->getSingleBadge($this->_badgeListDefaults)));
+                $className = strtolower(preg_replace("/\W/", "-", $this->getSingleBadge($this->badgeListDefaults)));
             } else {
                 $className = strtolower(preg_replace("/\W/", "-", $regexArrayResults[1]));
             }
@@ -137,11 +134,9 @@ class Badge extends AbstractHelper
      */
     public function hasBadge()
     {
-        if (empty($this->_badgeList))
-        {
+        if (count($this->badgeList)) {
             return false;
-        } else
-        {
+        } else {
             return true;
         }
     }
@@ -155,11 +150,10 @@ class Badge extends AbstractHelper
     private function getSingleBadge($badgeList = null)
     {
         if ($badgeList === null) {
-            $badgeList = $this->_badgeList;
+            $badgeList = $this->badgeList;
         }
 
-        if (is_array($badgeList))
-        {
+        if (is_array($badgeList)) {
             return $badgeList[0];
         } else {
             return $badgeList;
