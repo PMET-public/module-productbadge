@@ -18,13 +18,6 @@ use Magento\Framework\App\Action\Action;
 <?php
 $_productCollection = $block->getLoadedProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
-
-
-/* Start Edit - MagentoEse_ProductBadge */
-$badgeBlock =  $block->getLayout()->createBlock('MagentoEse\ProductBadge\Block\Product\Badge');
-/* End Edit - MagentoEse_ProductBadge */
-
-
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty"><div><?php echo __('We can\'t find products matching the selection.') ?></div></div>
@@ -57,6 +50,13 @@ $badgeBlock =  $block->getLayout()->createBlock('MagentoEse\ProductBadge\Block\P
                 <div class="product-item-info" data-container="product-grid">
                     <?php
                     $productImage = $block->getImage($_product, $image);
+
+
+                    /* Start Edit - MagentoEse_ProductBadge */
+                    $productBadge = $block->getBadge($_product);
+                    /* End Edit - MagentoEse_ProductBadge */
+
+
                     if ($pos != null) {
                         $position = ' style="left:' . $productImage->getWidth() . 'px;'
                             . 'top:' . $productImage->getHeight() . 'px;"';
@@ -68,7 +68,7 @@ $badgeBlock =  $block->getLayout()->createBlock('MagentoEse\ProductBadge\Block\P
                         
                         
                         <?php /* Start Edit - MagentoEse_ProductBadge */ ?>
-                        <?php echo $badgeBlock->init($_product)->toHtml() ?>
+                        <?php echo $productBadge->toHtml(); ?>
                         <?php /* End Edit - MagentoEse_ProductBadge */ ?>
 
 

@@ -1,32 +1,51 @@
 <?php
 
-/**
- * Magento ESE product badge model
- */
-namespace MagentoEse\ProductBadge\Model;
+namespace MagentoEse\ProductBadge\Helper;
 
-class Badge
+use Magento\Framework\App\Area;
+use Magento\Framework\App\Helper\AbstractHelper;
+
+/**
+ * Product Badge helper
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ */
+class Badge extends AbstractHelper
 {
     /**
      * @var []
      */
-    private $_badgeList;
+    protected $badgeList;
 
     /**
      * @var []
      */
-    private $_badgeListDefaults;
+    protected $badgeListDefaults;
 
     /**
-     * Initialize block
+     * Reset all previous data
+     *
+     * @return $this
+     */
+    protected function reset()
+    {
+        $this->badgeList = [];
+        $this->badgeListDefaults = [];
+        return $this;
+    }
+
+    /**
+     * Initialize Helper to work with Badge
      *
      * @param \Magento\Catalog\Model\Product $product
      * @return $this
      */
     public function init($product)
     {
-        $this->_badgeList = $product->getAttributeText('badge');
-        $this->_badgeListDefaults = $this->getDefaultAttributeText($product, 'badge');
+        $this->reset();
+
+        $this->badgeList = $product->getAttributeText('badge');
+        $this->badgeListDefaults = $this->getDefaultAttributeText($product, 'badge');
+
         return $this;
     }
 
@@ -35,15 +54,14 @@ class Badge
      *
      * @param \Magento\Catalog\Model\Product $product
      * @param string $attributeCode
-     * @return string
+     * @return string|array
      */
-    private function getDefaultAttributeText($product, $attributeCode)
+    private function getDefaultAttributeText(\Magento\Catalog\Model\Product $product, $attributeCode)
     {
         $value = $product->getData($attributeCode);
 
         // Reference:
-        //      Magento\Eav\Model\Entity\Attribute\Source
-        //          getOptionText()
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getOptionText
         $isMultiple = false;
         if (strpos($value, ',')) {
             $isMultiple = true;
@@ -52,11 +70,9 @@ class Badge
 
         // get the default (Admin store_id=0) values for the options
         // Reference:
-        //      Magento\Catalog\Model\Product
-        //          getAttributeText()
-        //      Magento\Eav\Model\Entity\Attribute\Source
-        //          getAllOptions()
-        //          getOptionText()
+        //  \Magento\Catalog\Model\Product::getAttributeText
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getAllOptions
+        //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getOptionText
         $options = $product->getResource()->getAttribute($attributeCode)->getSource()->getAllOptions(false, true);
 
         if ($isMultiple) {
@@ -74,6 +90,7 @@ class Badge
                 return $item['label'];
             }
         }
+        return '';
     }
 
     /**
@@ -84,9 +101,9 @@ class Badge
     public function getClassName()
     {
         if ($this->hasBadge()) {
-            preg_match("/.+\(([\w-]+)\)+/", $this->getSingleBadge($this->_badgeListDefaults), $regexArrayResults);
+            preg_match("/.+\(([\w-]+)\)+/", $this->getSingleBadge($this->badgeListDefaults), $regexArrayResults);
             if (empty($regexArrayResults[1])) {
-                $className = strtolower(preg_replace("/\W/", "-", $this->getSingleBadge($this->_badgeListDefaults)));
+                $className = strtolower(preg_replace("/\W/", "-", $this->getSingleBadge($this->badgeListDefaults)));
             } else {
                 $className = strtolower(preg_replace("/\W/", "-", $regexArrayResults[1]));
             }
@@ -117,11 +134,9 @@ class Badge
      */
     public function hasBadge()
     {
-        if (empty($this->_badgeList))
-        {
+        if ($this->badgeList == []) {
             return false;
-        } else
-        {
+        } else {
             return true;
         }
     }
@@ -132,14 +147,13 @@ class Badge
      * @param array $badgeList
      * @return string
      */
-    private function getSingleBadge($badgeList = null)
+    private function getSingleBadge($badgeList = [])
     {
-        if ($badgeList === null) {
-            $badgeList = $this->_badgeList;
+        if ($badgeList == []) {
+            $badgeList = $this->badgeList;
         }
 
-        if (is_array($badgeList))
-        {
+        if (is_array($badgeList)) {
             return $badgeList[0];
         } else {
             return $badgeList;
