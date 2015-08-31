@@ -134,7 +134,7 @@ class Badge extends AbstractHelper
      */
     public function hasBadge()
     {
-        if (count($this->badgeList)) {
+        if ($this->badgeList == []) {
             return false;
         } else {
             return true;
@@ -147,9 +147,9 @@ class Badge extends AbstractHelper
      * @param array $badgeList
      * @return string
      */
-    private function getSingleBadge($badgeList = null)
+    private function getSingleBadge($badgeList = [])
     {
-        if ($badgeList === null) {
+        if ($badgeList == []) {
             $badgeList = $this->badgeList;
         }
 
