@@ -62,7 +62,7 @@ class InstallData implements InstallDataInterface
                 'visible_on_front' => false,
                 'unique' => false,
                 'used_in_product_listing' => true,
-                'group' => 'General',
+                'group' => 'Product Details',
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
