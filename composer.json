@@ -2,14 +2,12 @@
     "name": "magentoese/module-productbadge",
     "type": "magento2-module",
     "require": {
-        "magento/magento-composer-installer": "*"
+        "magento/framework": "*"
     },
-    "extra": {
-        "map": [
-            [
-                "module",
-                "MagentoEse/ProductBadge"
-            ]
-        ]
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "MagentoEse\\ProductBadge\\": ""
+        }
     }
 }
