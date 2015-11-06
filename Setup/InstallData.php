@@ -52,7 +52,7 @@ class InstallData implements InstallDataInterface
                 'input' => 'multiselect',
                 'required' => false,
                 'backend' => 'Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend',
-                'global' => \Magento\Catalog\Model\Resource\Eav\Attribute::SCOPE_GLOBAL,
+                'global' => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::SCOPE_GLOBAL,
                 'visible' => true,
                 'user_defined' => false,
                 'searchable' => false,
