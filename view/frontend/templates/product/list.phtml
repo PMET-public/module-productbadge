@@ -65,10 +65,14 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                     <?php // Product Image ?>
                     <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
                         <?php echo $productImage->toHtml(); ?>
-                        
-                        
+
+
                         <?php /* Start Edit - MagentoEse_ProductBadge */ ?>
-                        <?php echo $productBadge->toHtml(); ?>
+                        <?php
+                            if($productBadge !=null) {
+                                echo $productBadge->toHtml();
+                            }
+                        ?>
                         <?php /* End Edit - MagentoEse_ProductBadge */ ?>
 
 
