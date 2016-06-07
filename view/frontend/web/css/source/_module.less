@@ -10,12 +10,6 @@
 // ribbon mixin for badges
 .ribbon(@badge-main, @badge-edge, @badge-shadow: @badge-edge, @rgba: 80%) {
     background-color: fade(@badge-main, @rgba);
-    &:before {
-        border-top-color: fade(@badge-edge, @rgba);
-        border-bottom-color: fade(@badge-edge, @rgba);
-        border-right-color: fade(@badge-edge, @rgba);
-        box-shadow: 1px 0px 0px fade(@badge-edge, @rgba);
-    }
 }
 
 // remove the hover state of the anchor tag
@@ -28,7 +22,7 @@ a.product-item-photo:hover {
     position: relative;
     bottom: 50px;
     z-index: 10;
-    left: 0;
+    left: -10px;
     width: 100%;
     text-align: left;
     font-size: 9px;
