@@ -52,7 +52,7 @@ class InstallData implements InstallDataInterface
                 'badge',
                 [
                     'type' => 'varchar',
-                    'label' => 'Product Badge',
+                    'label' => 'Luma Spotlight',
                     'input' => 'multiselect',
                     'required' => false,
                     'backend' => 'Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend',
