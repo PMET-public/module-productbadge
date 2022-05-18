@@ -63,10 +63,13 @@ class Badge extends AbstractHelper
         // Reference:
         //  \Magento\Eav\Model\Entity\Attribute\Source\Table::getOptionText
         $isMultiple = false;
-        if (strpos($value, ',')) {
-            $isMultiple = true;
-            $value = explode(',', $value);
+        if($value != null){
+            if (strpos($value, ',')) {
+                $isMultiple = true;
+                $value = explode(',', $value);
+            }
         }
+        
 
         // get the default (Admin store_id=0) values for the options
         // Reference:
